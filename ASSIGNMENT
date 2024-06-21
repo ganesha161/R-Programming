@@ -1,0 +1,33 @@
+## Following are a pair of functions that cache the inverse of a matrix
+
+
+## I created a special matrix object that can cache its inverse
+# set the input x as a matrix
+## and then set the solved value "g" as a null
+then I changed every reference to "mean" to "solve"
+
+makeCacheMatrix <- function(x = matrix(sample(1:100,8),2,2)) {
+  g <- NULL
+  set <- function(y) {
+    x <<- y
+    g <<- NULL
+  }
+  get <- function() x
+  setsolve <- function(solve) g <<- solve
+  getsolve <- function() g
+  list(set = set, get = get,
+       setsolve = setsolve,
+       getsolve = getsolve)
+}
+# Here also changed mean to solve
+cacheSolve <- function(x, ...) {
+  g <- x$getsolve()
+  if(!is.null(g)) {
+    message("getting inversed matrix")
+    return(g)
+  }
+  data <- x$get()
+  g <- solve(data, ...)
+  x$setsolve(g)
+  g
+}
